@@ -24,7 +24,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/home"
+          path="*"
           element={
             <ProtectedRoute>
               <Home />             
@@ -37,7 +37,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<RegisterAndLogout />} />
-        <Route path="*" element={<NotFound />}></Route>
+        <Route path="/notfound" element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
   )
