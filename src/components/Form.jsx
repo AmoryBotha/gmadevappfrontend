@@ -28,6 +28,7 @@ function Form({ route, method }) {
             }
         } catch (error) {
             alert(error)
+            navigate("/register")
         } finally {
             setLoading(false)
         }
