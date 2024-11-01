@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ACCESS_TOKEN } from "./constants";
 
-const apiUrl = "https://gmawebappbackend.onrender.com/";
+const apiUrl = "https://gmawebappbackend.onrender.com";
 
 const api = axios.create({
   baseURL: apiUrl,

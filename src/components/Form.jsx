@@ -27,7 +27,7 @@ function Form({ route, method }) {
                 navigate("/login")
             }
         } catch (error) {
-            alert(error)
+            alert("No user account found")
             navigate("/register")
         } finally {
             setLoading(false)
