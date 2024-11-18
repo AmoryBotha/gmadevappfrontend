@@ -29,8 +29,8 @@ function Home1() {
             <div>
                 <h1>GMA USER PORTAL</h1>
             </div>
+            <form><li class='form-button'><Link to ="/user">User Profile</Link> </li></form>
             <h4>Welcome To The GMA Portal</h4>
-            <li class='form-button'><Link to ="/user">User Profile</Link> </li>
             <form>
             <li class='form-button'><Link to ="/ownerLanding">OwnerLanding</Link> </li>
             </form>
