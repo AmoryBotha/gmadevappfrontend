@@ -109,11 +109,11 @@ function UserProfileFunc({ route, method }) {
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder={five}
             />
-            <li class='form-button'><Link to ="/resetpassword">Reset Password</Link> </li>
             {loading && <LoadingIndicator />}
             <button className="form-button" type="submit">
                 {name}
             </button>
+            <li class='form-button'><Link to ="/resetpassword">Reset Password</Link> </li>
         </form>
     );
 
