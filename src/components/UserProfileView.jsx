@@ -6,13 +6,6 @@ import "../styles/Form.css"
 import LoadingIndicator from "./LoadingIndicator";
 import { ACCESS_TOKEN, REFRESH_TOKEN, fnameStore,lnameStore,cellStore,idStore,usernameStore,webIdStore,conIdStore } from "../constants";
 
-
-       var name1 = localStorage.getItem('fnameStore');
-        var lname1 = localStorage.getItem('lnameStore');
-        localStorage.getItem('cellStore');
-        localStorage.getItem('idStore');
-        localStorage.getItem('usernameStore');
-        
 function UserProfileFunc({ route, method }) {
     const [fname, setFName] = useState("");
     const [lname, setLName] = useState("");
@@ -66,8 +59,9 @@ function UserProfileFunc({ route, method }) {
                 className="form-input"
                 type="text"
                 value={fname}
+                defaultValue={localStorage.getItem('fnameStore')}
                 onChange={(e) => setFName(e.target.value)}
-                text = {name1} 
+        
             />
             <div class='text'>
                 <p>Last Name</p>
@@ -76,8 +70,9 @@ function UserProfileFunc({ route, method }) {
                 className="form-input"
                 type="text"
                 value={lname}
+                defaultValue={localStorage.getItem('lnameStore')}
                 onChange={(e) => setLName(e.target.value)}
-                placeholder="Last Name"
+           
             />
             <div class='text'>
                 <p>Mobile Number</p>
@@ -86,8 +81,9 @@ function UserProfileFunc({ route, method }) {
                 className="form-input"
                 type="text"
                 value={cell}
+                defaultValue={localStorage.getItem('cellStore')}
                 onChange={(e) => setCell(e.target.value)}
-                placeholder="Mobile Number"
+           
             />
             <div class='text'>
                 <p>ID Number</p>
@@ -96,8 +92,9 @@ function UserProfileFunc({ route, method }) {
                 className="form-input"
                 type="text"
                 value={id}
+                defaultValue={localStorage.getItem('idStore')}
                 onChange={(e) => setID(e.target.value)}
-                placeholder="ID Number"
+          
             />
             <div class='text'>
                 <p>Email</p>
@@ -106,8 +103,9 @@ function UserProfileFunc({ route, method }) {
                 className="form-input"
                 type="text"
                 value={username}
+                defaultValue={localStorage.getItem('usernameStore')}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
+                
             />
             {loading && <LoadingIndicator />}
             <button className="form-button" type="submit">
