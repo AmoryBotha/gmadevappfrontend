@@ -39,7 +39,6 @@ function UserProfileFunc({ route, method }) {
             alert(error)
         } finally {
             setLoading(false)
-            window.location.reload();
         }
     };
 
