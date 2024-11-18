@@ -16,7 +16,6 @@ import { ACCESS_TOKEN, REFRESH_TOKEN, fnameStore,lnameStore,cellStore,idStore,us
 function UserProfileFunc({ route, method }) {
     const [fname, setFName] = useState("");
     const [lname, setLName] = useState("");
-    const [password, setPassword] = useState("");
     const [cell, setCell] = useState("");
     const [id, setID] = useState("");
     const [username, setUsername] = useState("");
@@ -36,19 +35,11 @@ function UserProfileFunc({ route, method }) {
         localStorage.setItem('idStore', id);
         localStorage.setItem('usernameStore', username);
         
-            const res = await api.post(route, { username, password })
-            if (method === "login") {
-                localStorage.setItem(ACCESS_TOKEN, res.data.access);
-                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-                navigate("/home")
-
-            } else {
-                navigate("/login")
-            }
         } catch (error) {
             alert(error)
         } finally {
             setLoading(false)
+            window.location.reload();
         }
     };
 
@@ -114,7 +105,6 @@ function UserProfileFunc({ route, method }) {
                 {name}
             </button>
         </form>
-        
     );
 
 }
