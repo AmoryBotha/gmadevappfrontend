@@ -113,8 +113,8 @@ function UserProfileFunc({ route, method }) {
             <button className="form-button" type="submit">
                 {name}
             </button>
-            <li class='form-button'><Link to ="/resetpassword">Reset Password</Link> </li>
         </form>
+        
     );
 
 }
