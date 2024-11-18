@@ -67,7 +67,7 @@ function UserProfileFunc({ route, method }) {
                 type="text"
                 value={fname}
                 onChange={(e) => setFName(e.target.value)}
-                defaultValue={one}
+                defaultValue={one.value}
             />
             <div class='text'>
                 <p>Last Name</p>
