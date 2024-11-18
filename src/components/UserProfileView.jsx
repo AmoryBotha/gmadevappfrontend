@@ -40,6 +40,7 @@ function UserProfileFunc({ route, method }) {
         } finally {
             setLoading(false)
         }
+        window.location.href = '/user'
     };
 
     return (
