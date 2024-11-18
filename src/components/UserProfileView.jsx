@@ -1,3 +1,5 @@
+console.log(localStorage)
+
 function UserProfileFunc(){
     return <div>
         <h1>User Profile PAGE</h1>
