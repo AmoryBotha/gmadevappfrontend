@@ -67,7 +67,6 @@ function UserProfileFunc({ route, method }) {
                 type="text"
                 value={fname}
                 onChange={(e) => setFName(e.target.value)}
-                defaultValue={one.value}
                 placeholder={one}
             />
             <div class='text'>
@@ -78,7 +77,7 @@ function UserProfileFunc({ route, method }) {
                 type="text"
                 value={lname}
                 onChange={(e) => setLName(e.target.value)}
-                defaultValue={two}
+                placeholder={two}
             />
             <div class='text'>
                 <p>Mobile Number</p>
@@ -88,7 +87,7 @@ function UserProfileFunc({ route, method }) {
                 type="text"
                 value={cell}
                 onChange={(e) => setCell(e.target.value)}
-                defaultValue={three}
+                placeholder={three}
             />
             <div class='text'>
                 <p>ID Number</p>
@@ -98,7 +97,7 @@ function UserProfileFunc({ route, method }) {
                 type="text"
                 value={id}
                 onChange={(e) => setID(e.target.value)}
-                defaultValue={four}
+                placeholder={four}
             />
             <div class='text'>
                 <p>Email</p>
@@ -108,8 +107,9 @@ function UserProfileFunc({ route, method }) {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                defaultValue={five}
+                placeholder={five}
             />
+            <li class='form-button'><Link to ="/resetpassword">Reset Password</Link> </li>
             {loading && <LoadingIndicator />}
             <button className="form-button" type="submit">
                 {name}
