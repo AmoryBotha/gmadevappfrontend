@@ -8,7 +8,8 @@ const PasswordResetRequest = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/password-reset/", { email }); // Adjust the endpoint if needed
+      //await axios.post("/password-reset/", { email }); // Adjust the endpoint if needed
+      navigate("/password-reset-confirm/:uidb64/:token")
       setMessage("Password reset link sent! Check your email.");
     } catch (error) {
       setMessage("Error sending password reset email.");
