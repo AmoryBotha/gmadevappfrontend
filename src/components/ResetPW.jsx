@@ -35,4 +35,4 @@ const PasswordResetRequest = () => {
   );
 };
 
-export default PasswordResetRequest;
+export default PasswordResetRequest

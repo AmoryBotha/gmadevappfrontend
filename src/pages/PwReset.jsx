@@ -1,4 +1,4 @@
-import PasswordResetRequest from "../components/ResetPw"
+import PasswordResetRequest from "../components/ResetPW"
 
 function PasswordResetRequest1() {
     
