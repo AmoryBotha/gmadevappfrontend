@@ -9,10 +9,12 @@ import OwnerLanding from "./pages/OwnerLanding"
 import TrusteeLanding from "./pages/TrusteeLanding"
 import ContractorLanding from "./pages/ContractorLanding"
 import EmailStatement from "./pages/DownloadStatement"
-import ForgotPW from "./pages/ForgotPW"
 import ChangeFR from "./pages/FRChange"
 import Levies from "./pages/LevyACCDetails"
 import User from "./pages/UserAcc"
+import PasswordResetRequest1 from "./pages/PwReset";
+import PasswordResetConfirm1 from "./pages/ConfirmPw";
+
 
 function Logout() {
   localStorage.clear()
@@ -44,9 +46,10 @@ function App() {
         <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="/notfound" element={<NotFound />}></Route>
         <Route path="/statement" element={<EmailStatement />}></Route>
-        <Route path="/resetpassword" element={<ForgotPW />}></Route>
         <Route path="/friendly" element={<ChangeFR />}></Route>
         <Route path="/levyAccounts" element={<Levies />}></Route>
+        <Route path="/password-reset" element={<PasswordResetRequest1 />} />
+        <Route path="/password-reset-confirm/:uidb64/:token" element={<PasswordResetConfirm1 />} />
         <Route path="/user" element={<User />}></Route>
       </Routes>
     </BrowserRouter>
