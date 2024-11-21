@@ -49,7 +49,7 @@ function App() {
         <Route path="/friendly" element={<ChangeFR />}></Route>
         <Route path="/levyAccounts" element={<Levies />}></Route>
         <Route path="/password-reset" element={<PasswordResetRequest1 />} />
-        <Route path="/password-reset-confirm/:uidb64/:token" element={<PasswordResetConfirm1 />} />
+        <Route path="/password-reset-confirm" element={<PasswordResetConfirm1 />} />
         <Route path="/user" element={<User />}></Route>
       </Routes>
     </BrowserRouter>
