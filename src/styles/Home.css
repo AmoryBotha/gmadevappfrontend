@@ -79,3 +79,54 @@ div {
     margin: 5px;
   }
   
+  .home-container {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .home-header h1 {
+    color: #333;
+  }
+  
+  .welcome-section h4 {
+    color: #555;
+  }
+  
+  .portal-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .portal-list .form-button {
+    margin: 10px 0;
+  }
+  
+  .form-button a {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #007bff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .form-button a:hover {
+    background-color: #0056b3;
+  }
+  
+  .additional-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .additional-links .form-button {
+    margin: 5px 0;
+  }
+  

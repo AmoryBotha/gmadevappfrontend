@@ -1,157 +1,61 @@
-import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import api from "../api";
-import Note from "../components/Note"
-import "../styles/Home.css"
-import "../styles/Form.css"
-import LoadingIndicator from "./LoadingIndicator";
-//import { usernameStore,webIdStore,conIdStore,ownerStore,trusteeStore,contractorStore } from "../constants";
-
-
+import { Link } from "react-router-dom";
+import "../styles/Home.css";
+import "../styles/Form.css";
 
 function Home1() {
+  const userRoles = {
+    owner: localStorage.getItem("ownerStore") === "true",
+    contractor: localStorage.getItem("contractorStore") === "true",
+    trustee: localStorage.getItem("trusteeStore") === "true",
+  };
 
-    const owner = localStorage.getItem('ownerStore');
-    const contractor = localStorage.getItem('contractorStore');
-    const trustee = localStorage.getItem('trusteeStore');
-    localStorage.getItem('webIdStore');
-    localStorage.getItem('conIdStore');
-    localStorage.getItem('usernameStore');
-    console.log(localStorage.getItem('ownerStore'));
-    console.log(localStorage.getItem('contractorStore'));
-    console.log(localStorage.getItem('trusteeStore'));
-    console.log(localStorage.getItem('webIdStore'));
-    console.log(owner, contractor, trustee);
+  const portalLinks = [
+    { role: "owner", label: "Owner Landing", path: "/ownerLanding" },
+    { role: "contractor", label: "Contractor Landing", path: "/contractorLanding" },
+    { role: "trustee", label: "Trustee Landing", path: "/trusteeLanding" },
+  ];
 
-    if(owner === "true" && contractor === "true" && trustee === "true" ){
-    return (
-        <div>
-            <div>
-                <h1>GMA USER PORTAL</h1>
-            </div>
-            <form><li class='form-button'><Link to ="/user">User Profile</Link> </li></form>
-            <form><li class='form-button'><Link to ="/password-reset-confirm">Reset Password</Link> </li></form>
-            <h4>Welcome To The GMA Portal</h4>
-            <form>
-            <li class='form-button'><Link to ="/ownerLanding">OwnerLanding</Link> </li>
-            </form>
-            <form>
-            <li class='form-button'><Link to ="/trusteeLanding">TrusteeLanding</Link> </li>
-            </form>
-            <form>
-            <li class='form-button'><Link to ="/contractorLanding">ContractorLanding</Link> </li>
-            </form>
-        </div>
-    );
-}else{if(owner === "false" && contractor === "true" && trustee === "true" )
-    {
-        return (
-            <div>
-                <div>
-                    <h1>GMA USER PORTAL</h1>
-                </div>
-                <h4>Welcome To The GMA Portal</h4>
-                <form>
-                <li class='form-button'><Link to ="/trusteeLanding">TrusteeLanding</Link> </li>
-                </form>
-                <form>
-                <li class='form-button'><Link to ="/contractorLanding">ContractorLanding</Link> </li>
-                </form>
-                </div>
-        );
-    }
-    else{
-        if(owner === "false" && contractor === "false" && trustee === "true" ){
-            return (
-                <div>
-                    <div>
-                        <h1>GMA USER PORTAL</h1>
-                    </div>
-                    <h4>Welcome To The GMA Portal</h4>
-                    <form>
-                     <li class='form-button'><Link to ="/trusteeLanding">TrusteeLanding</Link> </li>
-                    </form>
-                </div>
-            );
-        }
-        else{
-            if(owner === "false" && contractor === "true" && trustee === "false" ){
-                return (
-                    <div>
-                        <div>
-                            <h1>GMA USER PORTAL</h1>
-                        </div>
-                        <h4>Welcome To The GMA Portal</h4>
-                        <form>
-                        <li class='form-button'><Link to ="/contractorLanding">ContractorLanding</Link> </li>
-                        </form>
-                    </div>
-                );
-            } else{
-                if(owner === "true" && contractor === "false" && trustee === "false" ){
-                    return (
-                        <div>
-                            <div>
-                                <h1>GMA USER PORTAL</h1>
-                            </div>
-                            <h4>Welcome To The GMA Portal</h4>
-                            <form>
-                            <li class='form-button'><Link to ="/ownerLanding">OwnerLanding</Link> </li>
-                            </form>
-                        </div>
-                    );
-                }
-                else{if(owner === "true" && contractor === "true" && trustee === "false" )
-                    {
-                        return (
-                            <div>
-                                <div>
-                                    <h1>GMA USER PORTAL</h1>
-                                </div>
-                                <h4>Welcome To The GMA Portal</h4>
-                                <form>
-                                 <li class='form-button'><Link to ="/ownerLanding">OwnerLanding</Link> </li>
-                                 </form>
-                                 <form>
-                                <li class='form-button'><Link to ="/contractorLanding">ContractorLanding</Link> </li>
-                                </form>
-                            </div>
-                        );
-                    }else{
-                        if(owner === "true" && contractor === "false" && trustee === "true" )
-                            {
-                                return (
-                                    <div>
-                                        <div>
-                                            <h1>GMA USER PORTAL</h1>
-                                        </div>
-                                        <h4>Welcome To The GMA Portal</h4>
-                                        <form>
-                                          <li class='form-button'><Link to ="/ownerLanding">OwnerLanding</Link> </li>
-                                        </form>
-                                        <form>
-                                            <li class='form-button'><Link to ="/trusteeLanding">TrusteeLanding</Link> </li>
-                                        </form>
-                                    </div>
-                                );
-                            }else{
-                                return (
-                                <div>
-                                    <div>
-                                        <h1>GMA USER PORTAL</h1>
-                                    </div>
-                                    <h4>Welcome To The GMA Portal</h4>
-                                    <form onSubmit={createNote}>
-                                    <h1>You do not have access to any portals, please contact us.</h1>
-                                    </form>
-                                </div>
-                            );
-                        }
-                    }
-                }  
-        }
-    }
-    }
+  const accessibleLinks = portalLinks.filter((link) => userRoles[link.role]);
+
+  return (
+    <div className="home-container">
+      {/* Header */}
+      <header className="home-header">
+        <h1>GMA USER PORTAL</h1>
+      </header>
+
+      {/* Welcome Message */}
+      <section className="welcome-section">
+        <h4>Welcome to the GMA Portal</h4>
+        {accessibleLinks.length > 0 ? (
+          <>
+            <p>Select a portal to proceed:</p>
+            <ul className="portal-list">
+              {accessibleLinks.map((link) => (
+                <li key={link.path} className="form-button">
+                  <Link to={link.path}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <p>You do not have access to any portals. Please contact us for assistance.</p>
+        )}
+      </section>
+
+      {/* Additional Links */}
+      <section className="additional-links">
+        <ul>
+          <li className="form-button">
+            <Link to="/user">User Profile</Link>
+          </li>
+          <li className="form-button">
+            <Link to="/password-reset-confirm">Reset Password</Link>
+          </li>
+        </ul>
+      </section>
+    </div>
+  );
 }
-}
+
 export default Home1;
