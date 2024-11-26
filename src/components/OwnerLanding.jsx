@@ -30,9 +30,7 @@ function OwnerLanding1(){
             <p>{mail}</p>
             </div>
             <div className="inline-box">
-            <button className="form-button" type="submit">
-                Modify
-            </button>
+            <li class='form-button'><Link to ="/account">Modify</Link> </li>
             </div>
             </div>
             
@@ -55,14 +53,10 @@ function OwnerLanding1(){
             <p>R 9000,09</p>
             </div>
             <div className="inline-box">
-            <button className="form-button" type="submit">
-                Download Statement
-            </button>
+            <li class='form-button'><Link to ="/statement">Download Statement</Link> </li>
             </div>
             <div className="inline-box">
-            <button className="form-button" type="submit">
-                Edit
-            </button>
+            <li class='form-button'><Link to ="/levyAccounts">Edit</Link> </li>
             </div>
             </div>
             </div>
