@@ -1,77 +1,77 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/OwnerLanding.css";
 
-const webID = localStorage.getItem('webIdStore') || 'N/A';
-const conId = localStorage.getItem('conIdStore') || 'N/A';
-const mail = localStorage.getItem('usernameStore') || 'N/A';
+const webID = localStorage.getItem("webIdStore") || "N/A";
+const conId = localStorage.getItem("conIdStore") || "N/A";
+const mail = localStorage.getItem("usernameStore") || "N/A";
 
 function OwnerLanding1() {
-    return (
-        <div>
-            <h1>OWNER LANDING PAGE</h1>
-            <h1>ACCOUNTS</h1>
-            <p>Under Construction...</p>
+  const navigate = useNavigate();
 
-            <div>
-                <h4>Accounts Linked To Your Account</h4>
-                <p>ABC</p>
-                <div>
-                    <div className="inline-container">
-                        <div className="inline-box">
-                            <strong>Owner Account Number</strong>
-                            <p>Test Acc</p>
-                        </div>
-                        <div className="inline-box">
-                            <strong>Reg/ID No</strong>
-                            <p>645395938</p>
-                        </div>
-                        <div className="inline-box">
-                            <strong>Phone Number</strong>
-                            <p>09876789980</p>
-                        </div>
-                        <div className="inline-box">
-                            <strong>Email</strong>
-                            <p>{mail}</p>
-                        </div>
-                        <div className="inline-box">
-                            <li className="form-button">
-                                <Link to="/account">Modify</Link>
-                            </li>
-                        </div>
-                    </div>
+  // Function to go back to the previous page
+  const goBack = () => {
+    navigate(-1); // This will take the user back to the previous page in history
+  };
 
-                    <div className="inline-container">
-                        <div className="inline-box">
-                            <strong>Levy Account</strong>
-                            <p>GMA001</p>
-                        </div>
-                        <div className="inline-box">
-                            <strong>Building</strong>
-                            <p>Test BC</p>
-                        </div>
-                        <div className="inline-box">
-                            <strong>Door Number</strong>
-                            <p>8</p>
-                        </div>
-                        <div className="inline-box">
-                            <strong>Current Balance</strong>
-                            <p>R 9000,09</p>
-                        </div>
-                        <div className="inline-box">
-                            <li className="form-button">
-                                <Link to="/statement">Download Statement</Link>
-                            </li>
-                        </div>
-                        <div className="inline-box">
-                            <li className="form-button">
-                                <Link to="/levyAccounts">Edit</Link>
-                            </li>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="owner-landing">
+      <header className="header">
+        <button className="back-button" onClick={goBack}>
+          Back to Previous Page
+        </button>
+        <h1>Owner Landing Page</h1>
+        <h2>Accounts</h2>
+      </header>
+
+      <section className="accounts-section">
+        <h4>Accounts Linked to Your Account</h4>
+
+        <div className="account-details">
+          <div className="account-card">
+            <h5>Owner Account Details</h5>
+            <p>
+              <strong>Account Number:</strong> Test Acc
+            </p>
+            <p>
+              <strong>Reg/ID No:</strong> 645395938
+            </p>
+            <p>
+              <strong>Phone Number:</strong> 09876789980
+            </p>
+            <p>
+              <strong>Email:</strong> {mail}
+            </p>
+            <Link to="/account" className="button modify-btn">
+              Modify
+            </Link>
+          </div>
+
+          <div className="account-card">
+            <h5>Levy Account Details</h5>
+            <p>
+              <strong>Levy Account:</strong> GMA001
+            </p>
+            <p>
+              <strong>Building:</strong> Test BC
+            </p>
+            <p>
+              <strong>Door Number:</strong> 8
+            </p>
+            <p>
+              <strong>Current Balance:</strong> R 9000,09
+            </p>
+            <Link to="/statement" className="button download-btn">
+              Download Statement
+            </Link>
+            <Link to="/levyAccounts" className="button edit-btn">
+              Edit
+            </Link>
+          </div>
         </div>
-    );
+      </section>
+    </div>
+  );
 }
 
 export default OwnerLanding1;
