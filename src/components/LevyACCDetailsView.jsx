@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/BackButton.css";
 
-
 function LevyAccDetailsViewFunc() {
   const navigate = useNavigate();
 
@@ -13,7 +12,11 @@ function LevyAccDetailsViewFunc() {
 
   return (
     <div className="levy-details-container" style={{ fontFamily: "Arial, sans-serif" }}>
-      <header className="levy-header" style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <header className="levy-header" style={{ marginBottom: "10px", textAlign: "center" }}>
+        <h1>Levy Account Details View</h1>
+      </header>
+
+      <div className="back-button-container" style={{ textAlign: "center", marginBottom: "20px" }}>
         <button
           onClick={goBack}
           className="back-button"
@@ -29,8 +32,7 @@ function LevyAccDetailsViewFunc() {
         >
           &#8592; Back
         </button>
-        <h1>Levy Account Details View</h1>
-      </header>
+      </div>
 
       <div style={{ display: "flex", justifyContent: "space-around", padding: "20px" }}>
         {/* Age Details Form */}
