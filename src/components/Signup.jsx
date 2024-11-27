@@ -32,7 +32,7 @@ function Form({ route, method }) {
             "email1" : username,
             "cell1" : cell,
             "id1" : id,
-            "pw" : password,
+            "pw" : password
 
             }),headers: {
                 "Content-type": "application/json; charset=UTF-8"
