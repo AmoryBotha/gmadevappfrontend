@@ -1,0 +1,83 @@
+.construction-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+}
+
+.construction-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #ff6b6b;
+}
+
+.construction-header p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.construction-content {
+    margin-top: 20px;
+}
+
+.construction-image {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.construction-message {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #777;
+}
+
+.construction-footer {
+    margin-top: 40px;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.construction-footer p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #888;
+}
