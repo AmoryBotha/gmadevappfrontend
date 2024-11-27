@@ -81,3 +81,30 @@
     font-size: 1rem;
     color: #888;
 }
+
+.back-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.fun-back-button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #4caf50; /* Green color */
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.fun-back-button:hover {
+    background-color: #388e3c; /* Darker green */
+    transform: scale(1.1); /* Fun bounce effect */
+}
+
+.fun-back-button:active {
+    transform: scale(0.95); /* Slight shrink on click */
+    background-color: #2e7d32; /* Even darker green */
+}

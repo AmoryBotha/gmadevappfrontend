@@ -1,7 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/UnderConstruction.css"; // Create a CSS file for styles
 
 function ContractorLanding1() {
+    const navigate = useNavigate();
+
+    const handleBackClick = () => {
+        navigate(-1); // Navigate to the previous page
+    };
+
     return (
         <div className="construction-container">
             <div className="construction-header">
@@ -21,6 +28,12 @@ function ContractorLanding1() {
             <div className="construction-footer">
                 <div className="loader"></div>
                 <p>Loading exciting features...</p>
+            </div>
+            {/* Fun Back Button */}
+            <div className="back-button-container">
+                <button className="fun-back-button" onClick={handleBackClick}>
+                    🏠 Go Back to Safety!
+                </button>
             </div>
         </div>
     );
