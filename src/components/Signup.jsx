@@ -31,7 +31,8 @@ function Form({ route, method }) {
             "lname1" : lname,
             "email1" : username,
             "cell1" : cell,
-            "id1" : id
+            "id1" : id,
+            "pw" : password,
 
             }),headers: {
                 "Content-type": "application/json; charset=UTF-8"
