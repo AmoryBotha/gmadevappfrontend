@@ -31,8 +31,7 @@ function Form({ route, method }) {
             "lname1" : lname,
             "email1" : username,
             "cell1" : cell,
-            "id1" : id,
-            "pw" : password
+            "id1" : id
 
             }),headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -50,7 +49,6 @@ function Form({ route, method }) {
         localStorage.setItem('ownerStore', dataRes.accOwn);
         localStorage.setItem('trusteeStore', dataRes.accTrus);
         localStorage.setItem('contractorStore', dataRes.accCont);
-        localStorage.setItem('password',password);
         console.log(dataRes.accOwn,dataRes.accTrus,dataRes.accCont);
         console.log(localStorage.getItem('trusteeStore'));
         console.log(localStorage.getItem('webIdStore'));
