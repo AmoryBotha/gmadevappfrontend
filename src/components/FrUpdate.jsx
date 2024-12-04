@@ -1,42 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function UpdateFRFunc() {
   const [formData, setFormData] = useState({
-    levyAccountNumber: "", // Populated from API
-    friendlyReminderActive: "", // Populated from API
+    levyAccountNumber: "GMA001", // Example value, read-only
+    friendlyReminderActive: "Yes", // Editable field
   });
-
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0"
-        );
-  
-        if (!response.ok) {
-          throw new Error(`Server Error: ${response.status} - ${response.statusText}`);
-        }
-  
-        const data = await response.json();
-        setFormData({
-          levyAccountNumber: data.AccountNumber || "",
-          friendlyReminderActive: data.Friendly || "",
-        });
-      } catch (err) {
-        console.error("Failed to fetch data:", err.message || err);
-        setError("Unable to load data. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    fetchData();
-  }, []);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,6 +19,7 @@ function UpdateFRFunc() {
     e.preventDefault();
 
     try {
+      // Make a POST request to the provided API endpoint
       const response = await fetch(
         "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
         {
@@ -76,9 +46,6 @@ function UpdateFRFunc() {
       alert("An error occurred while submitting the form.");
     }
   };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
 
   return (
     <div>
