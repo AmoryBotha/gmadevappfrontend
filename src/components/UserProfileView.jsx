@@ -40,6 +40,9 @@ function UserProfileFunc() {
             };
 
             // Make the API call
+            //Production API fetch(
+               // "https://prod-102.westeurope.logic.azure.com:443/workflows/81c9f765597640d4aeaf78b8061c17c9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=h8bHLcCcsMDx9XZSPJRcqEPJ9WNEbPrGnW-A6Cz1ngA",
+               // {
             const resp = await fetch(
                 "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
                 {
