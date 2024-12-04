@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Form.css"; // Assuming this contains the improved styles
+import "../styles/Form.css";
 import LoadingIndicator from "./LoadingIndicator";
 
 function UserProfileFunc() {
@@ -14,28 +14,54 @@ function UserProfileFunc() {
 
     // Retrieve data from localStorage
     useEffect(() => {
-        setFName(localStorage.getItem('fnameStore') || "");
-        setLName(localStorage.getItem('lnameStore') || "");
-        setCell(localStorage.getItem('cellStore') || "");
-        setID(localStorage.getItem('idStore') || "");
-        setUsername(localStorage.getItem('usernameStore') || "");
+        setFName(localStorage.getItem("fnameStore") || "");
+        setLName(localStorage.getItem("lnameStore") || "");
+        setCell(localStorage.getItem("cellStore") || "");
+        setID(localStorage.getItem("idStore") || "");
+        setUsername(localStorage.getItem("usernameStore") || "");
     }, []);
 
     const handleSubmit = async (e) => {
-        setLoading(true);
         e.preventDefault();
+        setLoading(true);
 
         try {
-            localStorage.setItem('fnameStore', fname);
-            localStorage.setItem('lnameStore', lname);
-            localStorage.setItem('cellStore', cell);
-            localStorage.setItem('idStore', id);
-            localStorage.setItem('usernameStore', username);
-            
+            // Construct the payload with data from localStorage
+            const payload = {
+                Type: "UpdateUser",
+                End: "end",
+                displayName: `${fname} ${lname}`,
+                name: fname,
+                email: username,
+                lastName: lname,
+                cell,
+                idNum: id,
+                webID: localStorage.getItem("webIdStore") || "",
+            };
+
+            // Make the API call
+            const resp = await fetch(
+                "https://prod-102.westeurope.logic.azure.com:443/workflows/81c9f765597640d4aeaf78b8061c17c9/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=h8bHLcCcsMDx9XZSPJRcqEPJ9WNEbPrGnW-A6Cz1ngA",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            const data = await resp.json();
+
+            // Update localStorage after successful update
+            localStorage.setItem("fnameStore", fname);
+            localStorage.setItem("lnameStore", lname);
+            localStorage.setItem("cellStore", cell);
+            localStorage.setItem("idStore", id);
+            localStorage.setItem("usernameStore", username);
+
             alert("Profile updated successfully!");
             navigate("/user");
         } catch (error) {
-            alert("An error occurred while saving your profile.");
+            alert("An error occurred while updating your profile.");
         } finally {
             setLoading(false);
         }
