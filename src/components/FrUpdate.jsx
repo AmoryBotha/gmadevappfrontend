@@ -28,7 +28,7 @@ function UpdateFRFunc() {
 
         // Update formData with the fetched data
         setFormData({
-          levyAcc: data.AccNumb || "",
+            levyAccountNumber: data.AccNumb || "",
           friendlyReminderActive: data.FR || "",
         });
 
