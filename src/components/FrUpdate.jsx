@@ -11,33 +11,32 @@ function UpdateFRFunc() {
   const [error, setError] = useState(null); // Error state
 
   useEffect(() => {
-    // Fetch data when the component loads
     const fetchData = async () => {
       try {
         const response = await fetch(
           "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0"
         );
-
-        if (response.ok) {
-          const data = await response.json();
-          setFormData({
-            levyAccountNumber: data.AccountNumber || "", // Ensure fallback for missing data
-            friendlyReminderActive: data.Friendly || "",
-          });
-        } else {
-          console.error("API Error:", response.statusText);
-          setError("Failed to fetch data from the server.");
+  
+        if (!response.ok) {
+          throw new Error(`Server Error: ${response.status} - ${response.statusText}`);
         }
+  
+        const data = await response.json();
+        setFormData({
+          levyAccountNumber: data.AccountNumber || "",
+          friendlyReminderActive: data.Friendly || "",
+        });
       } catch (err) {
-        console.error("Error:", err);
-        setError("An error occurred while fetching data.");
+        console.error("Failed to fetch data:", err.message || err);
+        setError("Unable to load data. Please try again later.");
       } finally {
-        setLoading(false); // Stop loading
+        setLoading(false);
       }
     };
-
+  
     fetchData();
   }, []);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
