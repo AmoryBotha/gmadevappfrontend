@@ -4,10 +4,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function EmailStmntFunc() {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
   const navigate = useNavigate();
 
-  const email1 = localStorage.getItem("emailStore") || "user@example.com"; // Assuming email is stored in localStorage
+  const email1 = localStorage.getItem("usernameStore") || "user@example.com"; // Assuming email is stored in localStorage
   const conIdStore = localStorage.getItem("conIdStore") || "12345678"; // Example connection ID
   const web = localStorage.getItem("webIdStore") || "web123"; // Example userProfileID
 
@@ -17,8 +18,8 @@ function EmailStmntFunc() {
   };
 
   const handleExcelDownload = async () => {
-    if (!selectedDate) {
-      alert("Please select a date first.");
+    if (!fromDate || !toDate) {
+      alert("Please select both From and To dates.");
       return;
     }
 
@@ -27,11 +28,10 @@ function EmailStmntFunc() {
     );
 
     try {
-      const fromDate = selectedDate.toISOString().split("T")[0]; // Format as yyyy-MM-dd
-      const toDate = fromDate; // Assuming single-day reports
+      const from = fromDate.toISOString().split("T")[0]; // Format as yyyy-MM-dd
+      const to = toDate.toISOString().split("T")[0]; // Format as yyyy-MM-dd
 
       const resp = await fetch(
-        //"https://prod-73.westeurope.logic.azure.com:443/workflows/486474e82cfd4e26a831e171282bb59a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SmMHwN-vqCyjt9bEA2f_orViEyCWDm9YCiH6ux71yJE",
         "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
         {
           method: "POST",
@@ -40,8 +40,8 @@ function EmailStmntFunc() {
             End: "end",
             email: email1,
             ID: conIdStore,
-            from: fromDate,
-            to: toDate,
+            from: from,
+            to: to,
             userProfileID: web,
           }),
         }
@@ -59,8 +59,8 @@ function EmailStmntFunc() {
   };
 
   const handlePdfDownload = async () => {
-    if (!selectedDate) {
-      alert("Please select a date first.");
+    if (!fromDate || !toDate) {
+      alert("Please select both From and To dates.");
       return;
     }
 
@@ -69,11 +69,12 @@ function EmailStmntFunc() {
     );
 
     try {
-      const fromDate = selectedDate.toISOString().split("T")[0];
-      const toDate = fromDate;
+      const from = fromDate.toISOString().split("T")[0];
+      const to = toDate.toISOString().split("T")[0];
 
       const resp = await fetch(
-        "https://prod-235.westeurope.logic.azure.com:443/workflows/20fd3ee4d8f34f22a0dc2cd46404b9ff/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=i8HCRlS3NDZXQpt5-Q6sHztHY5YXdWDgXQ5H6EpAGSE",
+        //"https://prod-235.westeurope.logic.azure.com:443/workflows/20fd3ee4d8f34f22a0dc2cd46404b9ff/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=i8HCRlS3NDZXQpt5-Q6sHztHY5YXdWDgXQ5H6EpAGSE",
+        "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
         {
           method: "POST",
           body: JSON.stringify({
@@ -81,8 +82,8 @@ function EmailStmntFunc() {
             End: "end",
             email: email1,
             ID: conIdStore,
-            from: fromDate,
-            to: toDate,
+            from: from,
+            to: to,
             userProfileID: web,
           }),
         }
@@ -124,7 +125,7 @@ function EmailStmntFunc() {
         </button>
       </div>
 
-      {/* Date Picker and Download Buttons */}
+      {/* Date Pickers and Download Buttons */}
       <div
         style={{
           padding: "20px",
@@ -135,17 +136,32 @@ function EmailStmntFunc() {
         <h2>Date Selector</h2>
         <div style={{ margin: "20px 0" }}>
           <label
-            htmlFor="datePicker"
+            htmlFor="fromDatePicker"
             style={{ marginRight: "10px", fontWeight: "bold" }}
           >
-            Select a Date:
+            From Date:
           </label>
           <DatePicker
-            id="datePicker"
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
+            id="fromDatePicker"
+            selected={fromDate}
+            onChange={(date) => setFromDate(date)}
             dateFormat="yyyy-MM-dd"
-            placeholderText="Click to select a date"
+            placeholderText="Select From Date"
+          />
+        </div>
+        <div style={{ margin: "20px 0" }}>
+          <label
+            htmlFor="toDatePicker"
+            style={{ marginRight: "10px", fontWeight: "bold" }}
+          >
+            To Date:
+          </label>
+          <DatePicker
+            id="toDatePicker"
+            selected={toDate}
+            onChange={(date) => setToDate(date)}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="Select To Date"
           />
         </div>
         <div style={{ marginTop: "20px" }}>
