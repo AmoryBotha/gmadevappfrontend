@@ -3,42 +3,48 @@ import { Link } from "react-router-dom";
 
 function UpdateFRFunc() {
   const [formData, setFormData] = useState({
-    levyAccountNumber: "", // Populated from API
-    friendlyReminderActive: "", // Populated from API
+    levyAccountNumber: "", // Example value, read-only
+    friendlyReminderActive: "", // Editable field
   });
 
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-
   useEffect(() => {
-    // Fetch data when the component loads
-    const fetchData = async () => {
+    async function getAccInfo() {
       try {
-        const response = await fetch(
-          "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0"
+        const accountID = localStorage.getItem("conIdStore") || "defaultID";
+        const resp = await fetch(
+          //"https://prod-224.westeurope.logic.azure.com:443/workflows/d308b7d851f74c3f9d656433ce3d8d6f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=u8zXC78ZjM99AvFC68rJ-1pYgNZ35XykeeNd9fjPh7k",
+          "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              Type: "AccInfo",
+              End: "end",
+              ID: accountID,
+            }),
+          }
         );
 
-        if (response.ok) {
-          const data = await response.json();
-          setFormData({
-            levyAccountNumber: data.AccountNumber || "", // Fallback if the API does not provide these fields
-            friendlyReminderActive: data.Friendly || "",
-          });
-        } else {
-          console.error("API Error:", response.statusText);
-          setError("Failed to fetch data from the server.");
-        }
-      } catch (err) {
-        console.error("Error:", err);
-        setError("An error occurred while fetching data.");
-      } finally {
-        setLoading(false); // Stop loading
+        const data = await resp.json();
+
+        // Update formData with the fetched data
+        setFormData({
+          levyAcc: data.AccNumb || "",
+          friendlyReminderActive: data.FR || "",
+        });
+
+        // Update specific DOM elements directly (optional)
+        document.getElementById("levyAcc").textContent = data.AccNumb;
+        document.getElementById("friendlyReminderActive").value = data.FR;
+
+
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching account information:", error);
       }
-    };
+    }
 
-    fetchData();
-  }, []);
-
+    getAccInfo();
+  }, []); // Empty dependency array ensures this runs only once when the component loads
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -78,9 +84,6 @@ function UpdateFRFunc() {
       alert("An error occurred while submitting the form.");
     }
   };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
 
   return (
     <div>
