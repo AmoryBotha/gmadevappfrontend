@@ -1,214 +1,181 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-function EmailStmntFunc() {
-  const [fromDate, setFromDate] = useState(null);
-  const [toDate, setToDate] = useState(null);
-  const navigate = useNavigate();
+function AccDetailsViewFunc() {
+  const [formData, setFormData] = useState({
+    accountName: "",
+    email: "",
+    mobileNumber: "",
+    idReg: "",
+    billingAddress1: "",
+    billingAddress2: "",
+    billingAddress3: "",
+  });
 
-  const email1 = localStorage.getItem("usernameStore") || "user@example.com"; // Assuming email is stored in localStorage
-  const conIdStore = localStorage.getItem("conIdStore") || "12345678"; // Example connection ID
-  const web = localStorage.getItem("webIdStore") || "web123"; // Example userProfileID
+  useEffect(() => {
+    async function getAccInfo() {
+      try {
+        const accountID = localStorage.getItem("conIdStore") || "defaultID";
+        const resp = await fetch(
+          "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              Type: "AccInfo",
+              End: "end",
+              ID: accountID,
+            }),
+          }
+        );
 
-  // Function to go back to the previous page
-  const goBack = () => {
-    navigate(-1);
+        const data = await resp.json();
+
+        setFormData({
+          accountName: data.AccountName || "",
+          email: data.Email || "",
+          mobileNumber: data.MainPhone || "",
+          idReg: data.ID || "",
+          billingAddress1: data.AddressLine1 || "",
+          billingAddress2: data.AddressLine2 || "",
+          billingAddress3: data.AddressLine3 || "",
+        });
+      } catch (error) {
+        console.error("Error fetching account information:", error);
+      }
+    }
+
+    getAccInfo();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleExcelDownload = async () => {
-    if (!fromDate || !toDate) {
-      alert("Please select both From and To dates.");
-      return;
-    }
-  
-    alert(
-      `The system is generating your Excel report. It will be emailed to ${email1} as soon as it is finished.`
-    );
-  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-      };
-  
-      const from = formatDate(fromDate);
-      const to = formatDate(toDate);
-  
-      const resp = await fetch(
+      const response = await fetch(
         "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
         {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
-            Type: "AccNumbState",
+            Type: "UpdateAcc",
             End: "end",
-            email: email1,
-            ID: conIdStore,
-            from: from,
-            to: to,
-            userProfileID: web,
+            Data: formData,
           }),
         }
       );
-  
-      const data = await resp.json();
-      if (data.status === "success") {
-        alert(`Successfully sent Excel report to ${email1}`);
-      } else {
-        alert("Failed to generate Excel report. Please try again.");
-      }
-    } catch (error) {
-      alert("An error occurred while generating the Excel report.");
-    }
-  };
 
-  const handlePdfDownload = async () => {
-    if (!fromDate || !toDate) {
-      alert("Please select both From and To dates.");
-      return;
-    }
-  
-    alert(
-      `The system is generating your Excel report. It will be emailed to ${email1} as soon as it is finished.`
-    );
-  
-    try {
-      const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-      };
-  
-      const from = formatDate(fromDate);
-      const to = formatDate(toDate);
-  
-      const resp = await fetch(
-        "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            Type: "AccNumbState",
-            End: "end",
-            email: email1,
-            ID: conIdStore,
-            from: from,
-            to: to,
-            userProfileID: web,
-          }),
-        }
-      );
-  
-      const data = await resp.json();
-      if (data.status === "success") {
-        alert(`Successfully sent Excel report to ${email1}`);
+      if (response.ok) {
+        const result = await response.json();
+        alert("Account details updated successfully!");
+        console.log("Response from server:", result);
       } else {
-        alert("Failed to generate Excel report. Please try again.");
+        alert("Failed to update account details.");
       }
     } catch (error) {
-      alert("An error occurred while generating the Excel report.");
+      console.error("Error updating account details:", error);
+      alert("An error occurred while submitting the form.");
     }
   };
 
   return (
     <div>
-      <header style={{ textAlign: "center", marginBottom: "20px" }}>
-        <h1>Download Statement Page</h1>
-      </header>
-
-      {/* Back Button below the header */}
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <button
-          onClick={goBack}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-            transition: "background-color 0.3s ease",
-            fontSize: "1rem",
-          }}
-        >
-          &#8592; Back
-        </button>
-      </div>
-
-      {/* Date Pickers and Download Buttons */}
+      <h1>Acc Details View PAGE</h1>
       <div
         style={{
-          padding: "20px",
           fontFamily: "Arial, sans-serif",
-          textAlign: "center",
+          padding: "20px",
+          maxWidth: "600px",
+          margin: "0 auto",
         }}
       >
-        <h2>Date Selector</h2>
-        <div style={{ margin: "20px 0" }}>
-          <label
-            htmlFor="fromDatePicker"
-            style={{ marginRight: "10px", fontWeight: "bold" }}
-          >
-            From Date:
-          </label>
-          <DatePicker
-            id="fromDatePicker"
-            selected={fromDate}
-            onChange={(date) => setFromDate(date)}
-            dateFormat="yyyy-MM-dd"
-            placeholderText="Select From Date"
-          />
-        </div>
-        <div style={{ margin: "20px 0" }}>
-          <label
-            htmlFor="toDatePicker"
-            style={{ marginRight: "10px", fontWeight: "bold" }}
-          >
-            To Date:
-          </label>
-          <DatePicker
-            id="toDatePicker"
-            selected={toDate}
-            onChange={(date) => setToDate(date)}
-            dateFormat="yyyy-MM-dd"
-            placeholderText="Select To Date"
-          />
-        </div>
-        <div style={{ marginTop: "20px" }}>
-          <button
-            onClick={handleExcelDownload}
+        <div style={{ marginBottom: "20px" }}>
+          <Link
+            to="/accounts"
             style={{
-              padding: "10px 20px",
-              marginRight: "10px",
-              backgroundColor: "#28a745",
+              textDecoration: "none",
               color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
+              backgroundColor: "#007bff",
+              padding: "10px 20px",
+              borderRadius: "4px",
+              fontSize: "16px",
             }}
           >
-            Download Excel
-          </button>
-          <button
-            onClick={handlePdfDownload}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#dc3545",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Download PDF
-          </button>
+            Back to Accounts
+          </Link>
         </div>
+        <p style={{ marginBottom: "20px", color: "#555", fontSize: "14px" }}>
+          You can edit the details of your account here. Please note that if you
+          alter the details here it will alter the details for all the Levy
+          Statements of this entity on the GMA system.
+        </p>
+        <h2>Information</h2>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+        >
+          <div>
+            <label style={{ display: "block", fontWeight: "bold" }}>
+              Account Name
+            </label>
+            <input
+              type="text"
+              value={formData.accountName}
+              readOnly
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                backgroundColor: "#f9f9f9",
+              }}
+            />
+          </div>
+          <div>
+            <label style={{ display: "block", fontWeight: "bold" }}>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+              }}
+            />
+          </div>
+          {/* Other fields here */}
+          <div style={{ textAlign: "right" }}>
+            <button
+              type="submit"
+              style={{
+                padding: "10px 20px",
+                backgroundColor: "#28a745",
+                color: "#fff",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontSize: "16px",
+              }}
+            >
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
 }
 
-export default EmailStmntFunc;
+export default AccDetailsViewFunc;
