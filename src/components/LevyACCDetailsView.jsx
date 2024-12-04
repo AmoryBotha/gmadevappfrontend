@@ -210,18 +210,36 @@ function LevyAccDetailsViewFunc() {
                 <label style={{ display: "block", fontWeight: "bold" }}>
                   {field === "legal" ? "Handed Over To Legal" : field === "aod" ? "Active Arrangement" : "Friendly Letter Active"}
                 </label>
-                <input
-                  type="text"
-                  readOnly
-                  value={formData[field]}
-                  style={{
-                    width: "100%",
-                    padding: "8px",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                    backgroundColor: "#f9f9f9",
-                  }}
-                />
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <input
+                    type="text"
+                    readOnly
+                    value={formData[field]}
+                    style={{
+                      width: "80%",
+                      padding: "8px",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      backgroundColor: "#f9f9f9",
+                    }}
+                  />
+                  <Link
+                    to="/friendly"
+                    style={{
+                      display: "inline-block",
+                      width: "15%",
+                      padding: "8px",
+                      backgroundColor: "#007bff",
+                      color: "#fff",
+                      textAlign: "center",
+                      borderRadius: "4px",
+                      textDecoration: "none",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    Change
+                  </Link>
+                </div>
               </div>
             ))}
             <div style={{ textAlign: "center", marginTop: "20px" }}>
