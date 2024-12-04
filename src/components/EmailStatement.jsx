@@ -31,7 +31,8 @@ function EmailStmntFunc() {
       const toDate = fromDate; // Assuming single-day reports
 
       const resp = await fetch(
-        "https://prod-73.westeurope.logic.azure.com:443/workflows/486474e82cfd4e26a831e171282bb59a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SmMHwN-vqCyjt9bEA2f_orViEyCWDm9YCiH6ux71yJE",
+        //"https://prod-73.westeurope.logic.azure.com:443/workflows/486474e82cfd4e26a831e171282bb59a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SmMHwN-vqCyjt9bEA2f_orViEyCWDm9YCiH6ux71yJE",
+        "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
         {
           method: "POST",
           body: JSON.stringify({
