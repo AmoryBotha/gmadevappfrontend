@@ -22,15 +22,22 @@ function EmailStmntFunc() {
       alert("Please select both From and To dates.");
       return;
     }
-
+  
     alert(
       `The system is generating your Excel report. It will be emailed to ${email1} as soon as it is finished.`
     );
-
+  
     try {
-      const from = fromDate.toISOString().split("T")[0]; // Format as yyyy-MM-dd
-      const to = toDate.toISOString().split("T")[0]; // Format as yyyy-MM-dd
-
+      const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      };
+  
+      const from = formatDate(fromDate);
+      const to = formatDate(toDate);
+  
       const resp = await fetch(
         "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
         {
@@ -46,7 +53,7 @@ function EmailStmntFunc() {
           }),
         }
       );
-
+  
       const data = await resp.json();
       if (data.status === "success") {
         alert(`Successfully sent Excel report to ${email1}`);
@@ -63,17 +70,23 @@ function EmailStmntFunc() {
       alert("Please select both From and To dates.");
       return;
     }
-
+  
     alert(
-      `The system is generating your PDF report. It will be emailed to ${email1} as soon as it is finished.`
+      `The system is generating your Excel report. It will be emailed to ${email1} as soon as it is finished.`
     );
-
+  
     try {
-      const from = fromDate.toISOString().split("T")[0];
-      const to = toDate.toISOString().split("T")[0];
-
+      const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      };
+  
+      const from = formatDate(fromDate);
+      const to = formatDate(toDate);
+  
       const resp = await fetch(
-        //"https://prod-235.westeurope.logic.azure.com:443/workflows/20fd3ee4d8f34f22a0dc2cd46404b9ff/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=i8HCRlS3NDZXQpt5-Q6sHztHY5YXdWDgXQ5H6EpAGSE",
         "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
         {
           method: "POST",
@@ -88,15 +101,15 @@ function EmailStmntFunc() {
           }),
         }
       );
-
+  
       const data = await resp.json();
       if (data.status === "success") {
-        alert(`Successfully sent PDF report to ${email1}`);
+        alert(`Successfully sent Excel report to ${email1}`);
       } else {
-        alert("Failed to generate PDF report. Please try again.");
+        alert("Failed to generate Excel report. Please try again.");
       }
     } catch (error) {
-      alert("An error occurred while generating the PDF report.");
+      alert("An error occurred while generating the Excel report.");
     }
   };
 
