@@ -109,7 +109,7 @@ function LevyAccDetailsViewFunc() {
                     />
                     <li className="form-button" style={{ listStyle: "none" }}>
                       <Link
-                        to="/friendly"
+                        to="/friendly" // Ensure this route is correctly set up in your router
                         style={{
                           textDecoration: "none",
                           color: "#fff",
@@ -141,7 +141,7 @@ function LevyAccDetailsViewFunc() {
             <div style={{ textAlign: "center", marginTop: "20px" }}>
               <li className="form-button" style={{ listStyle: "none" }}>
                 <Link
-                  to="/statement"
+                  to="/statement" // Ensure this route is correctly set up in your router
                   style={{
                     textDecoration: "none",
                     color: "#fff",
