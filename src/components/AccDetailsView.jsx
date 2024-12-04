@@ -17,7 +17,8 @@ function AccDetailsViewFunc() {
       try {
         const accountID = localStorage.getItem("conIdStore") || "defaultID";
         const resp = await fetch(
-          "https://prod-224.westeurope.logic.azure.com:443/workflows/d308b7d851f74c3f9d656433ce3d8d6f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=u8zXC78ZjM99AvFC68rJ-1pYgNZ35XykeeNd9fjPh7k",
+          //"https://prod-224.westeurope.logic.azure.com:443/workflows/d308b7d851f74c3f9d656433ce3d8d6f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=u8zXC78ZjM99AvFC68rJ-1pYgNZ35XykeeNd9fjPh7k",
+          "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
           {
             method: "POST",
             body: JSON.stringify({
