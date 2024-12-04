@@ -1,11 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function UpdateFRFunc() {
   const [formData, setFormData] = useState({
-    levyAccountNumber: "GMA001", // Example value, read-only
-    friendlyReminderActive: "Yes", // Editable field
+    levyAccountNumber: "", // Populated from API
+    friendlyReminderActive: "", // Populated from API
   });
+
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
+
+  useEffect(() => {
+    // Fetch data when the component loads
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0"
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setFormData({
+            levyAccountNumber: data.AccountNumber || "", // Fallback if the API does not provide these fields
+            friendlyReminderActive: data.Friendly || "",
+          });
+        } else {
+          console.error("API Error:", response.statusText);
+          setError("Failed to fetch data from the server.");
+        }
+      } catch (err) {
+        console.error("Error:", err);
+        setError("An error occurred while fetching data.");
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,6 +78,9 @@ function UpdateFRFunc() {
       alert("An error occurred while submitting the form.");
     }
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
