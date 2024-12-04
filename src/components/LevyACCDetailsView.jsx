@@ -1,14 +1,79 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/BackButton.css";
 
 function LevyAccDetailsViewFunc() {
+  const [formData, setFormData] = useState({
+    balance: "",
+    current: "",
+    days30: "",
+    days60: "",
+    days90: "",
+    days120: "",
+    days150: "",
+    days180: "",
+    owner: "",
+    billAdd1: '',
+    billAdd2: '',
+    billAdd3: '',
+    billAdd4: '',
+    legal: '',
+    aod: '',
+    fr: ''
+  });
   const navigate = useNavigate();
 
   // Function to go back to the previous page
   const goBack = () => {
     navigate(-1); // This will take the user back to the previous page in history
   };
+
+  useEffect(() => {
+    async function getAccInfo() {
+      try {
+        const accountID = localStorage.getItem("conIdStore") || "defaultID";
+        const resp = await fetch(
+          "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              Type: "AccInfo",
+              End: "end",
+              ID: accountID,
+            }),
+          }
+        );
+
+        const data = await resp.json();
+
+        // Update formData with the fetched data
+        setFormData({
+          balance: data.bal || "",
+          current: data.current || "",
+          days30: data.days30 || "",
+          days60: data.days60 || "",
+          days90: data.days90 || "",
+          days120: data.days120 || "",
+          days150: data.days150 || "",
+          days180: data.days180 || "",
+          owner: data.owner || "",
+          billAdd1: data.AddressLine1 || "",
+          billAdd2: data.AddressLine2 || "",
+          billAdd3: data.AddressLine3 || "",
+          billAdd4: data.AddressLine4 || "",
+          legal: data.legal || "",
+          aod: data.aod || "",
+          fr: data.FR || ""
+        });
+
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching account information:", error);
+      }
+    }
+
+    getAccInfo();
+  }, []); // Empty dependency array ensures this runs only once when the component loads
 
   return (
     <div className="levy-details-container" style={{ fontFamily: "Arial, sans-serif" }}>
@@ -39,13 +104,45 @@ function LevyAccDetailsViewFunc() {
         <div style={{ width: "30%" }}>
           <h2>Age Details</h2>
           <form>
-            {["Balance", "Current", "30 days", "60 days", "90 days", "120 days", "150 days", "180+ days"].map((label, index) => (
+            <div style={{ marginBottom: "10px" }}>
+              <label style={{ display: "block", fontWeight: "bold" }}>Balance</label>
+              <input
+                type="text"
+                readOnly
+                value={formData.balance}
+                style={{
+                  width: "100%",
+                  padding: "8px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  backgroundColor: "#f9f9f9",
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: "10px" }}>
+              <label style={{ display: "block", fontWeight: "bold" }}>Current</label>
+              <input
+                type="text"
+                readOnly
+                value={formData.current}
+                style={{
+                  width: "100%",
+                  padding: "8px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  backgroundColor: "#f9f9f9",
+                }}
+              />
+            </div>
+
+            {["30", "60", "90", "120", "150", "180"].map((days, index) => (
               <div key={index} style={{ marginBottom: "10px" }}>
-                <label style={{ display: "block", fontWeight: "bold" }}>{label}</label>
+                <label style={{ display: "block", fontWeight: "bold" }}>{`${days} days`}</label>
                 <input
                   type="text"
                   readOnly
-                  value={`Value for ${label}`} // Example value, replace dynamically as needed
+                  value={formData[`days${days}`] || ""}
                   style={{
                     width: "100%",
                     padding: "8px",
@@ -63,13 +160,31 @@ function LevyAccDetailsViewFunc() {
         <div style={{ width: "30%" }}>
           <h2>Statement Address</h2>
           <form>
-            {["Owner", "Billing Address Line 1", "Billing Address Line 2", "Billing Address Line 3", "Billing Address Line 4"].map((label, index) => (
+            <div style={{ marginBottom: "10px" }}>
+              <label style={{ display: "block", fontWeight: "bold" }}>Owner</label>
+              <input
+                type="text"
+                readOnly
+                value={formData.owner}
+                style={{
+                  width: "100%",
+                  padding: "8px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  backgroundColor: "#f9f9f9",
+                }}
+              />
+            </div>
+
+            {["billAdd1", "billAdd2", "billAdd3", "billAdd4"].map((field, index) => (
               <div key={index} style={{ marginBottom: "10px" }}>
-                <label style={{ display: "block", fontWeight: "bold" }}>{label}</label>
+                <label style={{ display: "block", fontWeight: "bold" }}>
+                  {`Billing Address Line ${index + 1}`}
+                </label>
                 <input
                   type="text"
                   readOnly
-                  value={`Value for ${label}`} // Example value, replace dynamically as needed
+                  value={formData[field]}
                   style={{
                     width: "100%",
                     padding: "8px",
@@ -90,52 +205,23 @@ function LevyAccDetailsViewFunc() {
         <div style={{ width: "30%" }}>
           <h2>Information</h2>
           <form>
-            {["Handed Over To Legal", "Active Arrangement", "Friendly Letter Active"].map((label, index) => (
+            {["legal", "aod", "fr"].map((field, index) => (
               <div key={index} style={{ marginBottom: "10px" }}>
-                <label style={{ display: "block", fontWeight: "bold" }}>{label}</label>
-                {label === "Friendly Letter Active" ? (
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <input
-                      type="text"
-                      readOnly
-                      value={`Value for ${label}`} // Example value, replace dynamically as needed
-                      style={{
-                        flex: 1,
-                        padding: "8px",
-                        border: "1px solid #ccc",
-                        borderRadius: "4px",
-                        backgroundColor: "#f9f9f9",
-                      }}
-                    />
-                    <li className="form-button" style={{ listStyle: "none" }}>
-                      <Link
-                        to="/friendly" // Ensure this route is correctly set up in your router
-                        style={{
-                          textDecoration: "none",
-                          color: "#fff",
-                          backgroundColor: "#007bff",
-                          padding: "5px 10px",
-                          borderRadius: "4px",
-                        }}
-                      >
-                        Change
-                      </Link>
-                    </li>
-                  </div>
-                ) : (
-                  <input
-                    type="text"
-                    readOnly
-                    value={`Value for ${label}`} // Example value, replace dynamically as needed
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      border: "1px solid #ccc",
-                      borderRadius: "4px",
-                      backgroundColor: "#f9f9f9",
-                    }}
-                  />
-                )}
+                <label style={{ display: "block", fontWeight: "bold" }}>
+                  {field === "legal" ? "Handed Over To Legal" : field === "aod" ? "Active Arrangement" : "Friendly Letter Active"}
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  value={formData[field]}
+                  style={{
+                    width: "100%",
+                    padding: "8px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    backgroundColor: "#f9f9f9",
+                  }}
+                />
               </div>
             ))}
             <div style={{ textAlign: "center", marginTop: "20px" }}>
