@@ -202,64 +202,90 @@ function LevyAccDetailsViewFunc() {
         </div>
 
         {/* Information Form */}
-        <div style={{ width: "30%" }}>
-          <h2>Information</h2>
-          <form>
-            {["legal", "aod", "fr"].map((field, index) => (
-              <div key={index} style={{ marginBottom: "10px" }}>
-                <label style={{ display: "block", fontWeight: "bold" }}>
-                  {field === "legal" ? "Handed Over To Legal" : field === "aod" ? "Active Arrangement" : "Friendly Letter Active"}
-                </label>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <input
-                    type="text"
-                    readOnly
-                    value={formData[field]}
-                    style={{
-                      width: "80%",
-                      padding: "8px",
-                      border: "1px solid #ccc",
-                      borderRadius: "4px",
-                      backgroundColor: "#f9f9f9",
-                    }}
-                  />
-                  <Link
-                    to="/friendly"
-                    style={{
-                      display: "inline-block",
-                      width: "15%",
-                      padding: "8px",
-                      backgroundColor: "#007bff",
-                      color: "#fff",
-                      textAlign: "center",
-                      borderRadius: "4px",
-                      textDecoration: "none",
-                      marginLeft: "10px",
-                    }}
-                  >
-                    Change
-                  </Link>
-                </div>
-              </div>
-            ))}
-            <div style={{ textAlign: "center", marginTop: "20px" }}>
-              <li className="form-button" style={{ listStyle: "none" }}>
-                <Link
-                  to="/statement" // Ensure this route is correctly set up in your router
-                  style={{
-                    textDecoration: "none",
-                    color: "#fff",
-                    backgroundColor: "#28a745",
-                    padding: "10px 20px",
-                    borderRadius: "4px",
-                  }}
-                >
-                  Download Statement
-                </Link>
-              </li>
-            </div>
-          </form>
-        </div>
+<div style={{ width: "30%" }}>
+  <h2>Information</h2>
+  <form>
+    <div style={{ marginBottom: "10px" }}>
+      <label style={{ display: "block", fontWeight: "bold" }}>Handed Over To Legal</label>
+      <input
+        type="text"
+        readOnly
+        value={formData.legal}
+        style={{
+          width: "100%",
+          padding: "8px",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+          backgroundColor: "#f9f9f9",
+        }}
+      />
+    </div>
+    <div style={{ marginBottom: "10px" }}>
+      <label style={{ display: "block", fontWeight: "bold" }}>Active Arrangement</label>
+      <input
+        type="text"
+        readOnly
+        value={formData.aod}
+        style={{
+          width: "100%",
+          padding: "8px",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+          backgroundColor: "#f9f9f9",
+        }}
+      />
+    </div>
+    <div style={{ marginBottom: "10px" }}>
+      <label style={{ display: "block", fontWeight: "bold" }}>Friendly Letter Active</label>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <input
+          type="text"
+          readOnly
+          value={formData.fr}
+          style={{
+            width: "80%",
+            padding: "8px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            backgroundColor: "#f9f9f9",
+          }}
+        />
+        <Link
+          to="/friendly"
+          style={{
+            display: "inline-block",
+            width: "15%",
+            padding: "8px",
+            backgroundColor: "#007bff",
+            color: "#fff",
+            textAlign: "center",
+            borderRadius: "4px",
+            textDecoration: "none",
+            marginLeft: "10px",
+          }}
+        >
+          Change
+        </Link>
+      </div>
+    </div>
+    <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <li className="form-button" style={{ listStyle: "none" }}>
+        <Link
+          to="/statement" // Ensure this route is correctly set up in your router
+          style={{
+            textDecoration: "none",
+            color: "#fff",
+            backgroundColor: "#28a745",
+            padding: "10px 20px",
+            borderRadius: "4px",
+          }}
+        >
+          Download Statement
+        </Link>
+      </li>
+    </div>
+  </form>
+</div>
       </div>
     </div>
   );
