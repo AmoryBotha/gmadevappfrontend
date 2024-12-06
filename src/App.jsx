@@ -46,13 +46,13 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="/notfound" element={<NotFound />}></Route>
-        <Route path="/statement" element={<EmailStatement />}></Route>
-        <Route path="/friendly" element={<ChangeFR />}></Route>
-        <Route path="/levyAccounts" element={<Levies />}></Route>
+        <Route path="/statement/:id" element={<EmailStatement />}></Route>
+        <Route path="/friendly/:id" element={<ChangeFR />}></Route>
+        <Route path="/levyAccounts/:id" element={<Levies />}></Route>
         <Route path="/password-reset" element={<PasswordResetRequest1 />} />
         <Route path="/password-reset-confirm" element={<PasswordResetConfirm1 />} />
         <Route path="/user" element={<User />}></Route>
-        <Route path="/account" element={<AccDetailsViewFunc1 />}></Route>
+        <Route path="/account/:id" element={<AccDetailsViewFunc1 />}></Route>
       </Routes>
     </BrowserRouter>
   )
