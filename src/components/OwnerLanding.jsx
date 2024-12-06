@@ -10,12 +10,19 @@ const OwnerLanding1 = () => {
   const goBack = () => {
     navigate(-1);
   };
-
+  const contactID = localStorage.getItem("conIdStore") || "defaultID";
   // Function to fetch account details
   const fetchAccounts = async () => {
     try {
       const response = await fetch(
-        "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0"
+        "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
+      
+        {
+          method: "POST",
+          body: JSON.stringify({
+            ID: contactID,
+          }),
+        }
       );
       const data = await response.json();
 
