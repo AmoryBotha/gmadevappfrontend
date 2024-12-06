@@ -48,14 +48,14 @@ function LevyAccDetailsViewFunc() {
 
         // Update formData with the fetched data
         setFormData({
-          balance: data.bal || "",
-          current: data.current || "",
-          days30: data.days30 || "",
-          days60: data.days60 || "",
-          days90: data.days90 || "",
-          days120: data.days120 || "",
-          days150: data.days150 || "",
-          days180: data.days180 || "",
+          balance:"R "+ data.bal || "",
+          current:"R "+ data.current || "",
+          days30:"R "+ data.days30 || "",
+          days60:"R "+ data.days60 || "",
+          days90:"R "+ data.days90 || "",
+          days120:"R "+ data.days120 || "",
+          days150:"R "+ data.days150 || "",
+          days180:"R "+ data.days180 || "",
           owner: data.owner || "",
           billAdd1: data.AddressLine1 || "",
           billAdd2: data.AddressLine2 || "",
