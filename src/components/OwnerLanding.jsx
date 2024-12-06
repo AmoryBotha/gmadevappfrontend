@@ -10,17 +10,18 @@ const OwnerLanding1 = () => {
   const goBack = () => {
     navigate(-1);
   };
+
   const contactID = localStorage.getItem("conIdStore") || "defaultID";
+
   // Function to fetch account details
   const fetchAccounts = async () => {
     try {
       console.log("Fetching accounts...");
 
-      // First API request to fetch accounts
       const response = await fetch(
         "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
         {
-          method: "POST", // Change to "POST" if required
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -36,7 +37,6 @@ const OwnerLanding1 = () => {
 
       const data = await response.json();
 
-      // Second API request for each account to fetch levy accounts
       const updatedAccounts = await Promise.all(
         data.map(async (account) => {
           console.log(`Fetching levy accounts for AccountID: ${account.AccountID}`);
@@ -120,36 +120,40 @@ const OwnerLanding1 = () => {
               </Link>
 
               <h5>Levy Account Details</h5>
-              {account.levyAccounts.map((levy) => (
-                <div className="levy-account" key={levy.LevyAccountID}>
-                  <p>
-                    <strong>Levy Account:</strong>{" "}
-                    {levy.LevyAccountNumber || "N/A"}
-                  </p>
-                  <p>
-                    <strong>Building:</strong> {levy.BuildingName || "N/A"}
-                  </p>
-                  <p>
-                    <strong>Door Number:</strong> {levy.DoorNumber || "N/A"}
-                  </p>
-                  <p>
-                    <strong>Current Balance:</strong> R{" "}
-                    {levy.Balance || "0.00"}
-                  </p>
-                  <Link
-                    to={`/statement/${levy.LevyAccountID}`}
-                    className="button download-btn"
-                  >
-                    Download Statement
-                  </Link>
-                  <Link
-                    to={`/levyAccounts/${levy.LevyAccountID}`}
-                    className="button edit-btn"
-                  >
-                    Edit
-                  </Link>
-                </div>
-              ))}
+              <div className="levy-account-list">
+                {account.levyAccounts.map((levy) => (
+                  <div className="levy-account-item" key={levy.LevyAccountID}>
+                    <p>
+                      <strong>Levy Account:</strong>{" "}
+                      {levy.LevyAccountNumber || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Building:</strong> {levy.BuildingName || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Door Number:</strong> {levy.DoorNumber || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Current Balance:</strong> R{" "}
+                      {levy.Balance || "0.00"}
+                    </p>
+                    <div className="levy-buttons">
+                      <Link
+                        to={`/statement/${levy.LevyAccountID}`}
+                        className="button download-btn"
+                      >
+                        Download Statement
+                      </Link>
+                      <Link
+                        to={`/levyAccounts/${levy.LevyAccountID}`}
+                        className="button edit-btn"
+                      >
+                        Edit
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>

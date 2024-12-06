@@ -113,3 +113,27 @@ body {
     background-color: #e0a800;
   }
   
+  .account-card {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .levy-account-list {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  
+  .levy-account-item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .levy-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+  }
+  
