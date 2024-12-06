@@ -30,7 +30,7 @@ const OwnerLanding1 = () => {
       const updatedAccounts = await Promise.all(
         data.map(async (account) => {
           const levyResponse = await fetch(
-            "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
+            "https://prod-26.westeurope.logic.azure.com:443/workflows/01fe4398170e437bbc3b0d8d2689f151/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=8zQrsZYowlCUps2EOSJ6W5tlBuP4zmhnnjgetdsCK68",
             {
               method: "POST",
               body: JSON.stringify({ accountId: account.AccountID }),
