@@ -47,7 +47,7 @@ function App() {
         <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="/notfound" element={<NotFound />}></Route>
         <Route path="/statement/:id" element={<EmailStatement />}></Route>
-        <Route path="/friendly/:id" element={<ChangeFR />}></Route>
+        <Route path="/friendly" element={<ChangeFR />}></Route>
         <Route path="/levyAccounts/:id" element={<Levies />}></Route>
         <Route path="/password-reset" element={<PasswordResetRequest1 />} />
         <Route path="/password-reset-confirm" element={<PasswordResetConfirm1 />} />
