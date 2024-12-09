@@ -26,6 +26,7 @@ const OwnerLanding1 = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            Type: "Owner",
             ID: contactID,
           }),
         }
