@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "../styles/Home.css";
 import "../styles/Form.css";
+import "../styles/Navbar.css"; // New CSS file for Navbar styles
 
 function Home1() {
   const userRoles = {
@@ -19,6 +20,25 @@ function Home1() {
 
   return (
     <div className="home-container">
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="navbar-logo">
+          <h2>GMA Property Management</h2>
+        </div>
+        <ul className="navbar-links">
+          <li>
+            <Link to="/user" className="navbar-link">
+              Profile
+            </Link>
+          </li>
+          <li>
+            <Link to="/login" className="navbar-link">
+              Logout
+            </Link>
+          </li>
+        </ul>
+      </nav>
+
       {/* Header */}
       <header className="home-header">
         <h1>GMA USER PORTAL</h1>
