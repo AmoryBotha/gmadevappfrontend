@@ -29,6 +29,8 @@ function ContractorLanding1() {
             </li>
           </ul>
         </nav>
+        
+        {/* Page Content */}
         <div className="construction-container">
             <div className="construction-header">
                 <h1>🚧 Contractor Landing Page 🚧</h1>
