@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../styles/Navbar.css"; // Importing the Navbar styles
 
 const PasswordResetRequest = () => {
   const [email, setEmail] = useState("");

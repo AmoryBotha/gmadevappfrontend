@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Form.css";
 import LoadingIndicator from "./LoadingIndicator";
+import "../styles/Navbar.css"; // Importing the Navbar styles
 
 function UserProfileFunc() {
     const [fname, setFName] = useState("");

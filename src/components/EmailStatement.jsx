@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "../styles/Navbar.css"; // Importing the Navbar styles
 
 function EmailStmntFunc() {
   const [fromDate, setFromDate] = useState(null);
@@ -115,6 +116,7 @@ function EmailStmntFunc() {
 
   return (
     <div>
+      
       <header style={{ textAlign: "center", marginBottom: "20px" }}>
         <h1>Download Statement Page</h1>
       </header>

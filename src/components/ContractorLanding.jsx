@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/UnderConstruction.css"; // Create a CSS file for styles
+import "../styles/Navbar.css"; // Importing the Navbar styles
 
 function ContractorLanding1() {
     const navigate = useNavigate();
@@ -10,6 +11,24 @@ function ContractorLanding1() {
     };
 
     return (
+        <div>{/* Navbar */}
+        <nav className="navbar">
+          <div className="navbar-logo">
+            <h2>GMA Property Management</h2>
+          </div>
+          <ul className="navbar-links">
+            <li>
+              <Link to="/user" className="navbar-link">
+                Profile
+              </Link>
+            </li>
+            <li>
+              <Link to="/login" className="navbar-link">
+                Logout
+              </Link>
+            </li>
+          </ul>
+        </nav>
         <div className="construction-container">
             <div className="construction-header">
                 <h1>🚧 Contractor Landing Page 🚧</h1>
@@ -35,6 +54,7 @@ function ContractorLanding1() {
                     🏠 Go Back to Safety!
                 </button>
             </div>
+        </div>
         </div>
     );
 }

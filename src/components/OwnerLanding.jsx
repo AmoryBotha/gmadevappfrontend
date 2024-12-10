@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/OwnerLanding.css";
+import "../styles/Navbar.css"; // Importing the Navbar styles
 
 const OwnerLanding1 = () => {
   const [accounts, setAccounts] = useState([]);

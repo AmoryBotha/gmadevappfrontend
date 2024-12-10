@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/UnderConstruction.css"; // Reuse or modify the same CSS file
+import "../styles/Navbar.css"; // Importing the Navbar styles
 
 function TrusteeLanding1() {
     const navigate = useNavigate();

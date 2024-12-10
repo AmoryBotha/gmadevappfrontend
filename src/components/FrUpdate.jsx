@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "../styles/Navbar.css"; // Importing the Navbar styles
 
 function UpdateFRFunc() {
   const [formData, setFormData] = useState({

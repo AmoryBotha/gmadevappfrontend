@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/BackButton.css";
+import "../styles/Navbar.css"; // Importing the Navbar styles
 
 function LevyAccDetailsViewFunc() {
   const [formData, setFormData] = useState({
