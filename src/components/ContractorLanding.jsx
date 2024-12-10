@@ -11,26 +11,6 @@ function ContractorLanding1() {
     };
 
     return (
-        <div>{/* Navbar */}
-        <nav className="navbar">
-          <div className="navbar-logo">
-            <h2>GMA Property Management</h2>
-          </div>
-          <ul className="navbar-links">
-            <li>
-              <Link to="/user" className="navbar-link">
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link to="/login" className="navbar-link">
-                Logout
-              </Link>
-            </li>
-          </ul>
-        </nav>
-        
-        {/* Page Content */}
         <div className="construction-container">
             <div className="construction-header">
                 <h1>🚧 Contractor Landing Page 🚧</h1>
@@ -56,7 +36,6 @@ function ContractorLanding1() {
                     🏠 Go Back to Safety!
                 </button>
             </div>
-        </div>
         </div>
     );
 }
