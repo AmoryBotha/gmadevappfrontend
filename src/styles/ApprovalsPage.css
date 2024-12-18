@@ -1,0 +1,123 @@
+/* ApprovalsPage.css */
+
+/* General Container */
+.approvals-container {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Navbar */
+  .navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d6e4f0;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .nav-button {
+    background-color: #8cbae5;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-button:hover {
+    background-color: #6fa9d9;
+  }
+  
+  /* View Selector */
+  .view-selector {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .view-button {
+    background-color: #d1e7dd;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .view-button.active {
+    background-color: #0d6efd;
+    color: white;
+  }
+  
+  .view-button:hover {
+    background-color: #a7d9c4;
+  }
+  
+  /* Approvals List */
+  .approvals-list {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .approval-item {
+    background-color: #ffe6e6;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .approval-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .approval-subject {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .approval-type,
+  .approval-date,
+  .approval-status {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .approval-button {
+    align-self: flex-start;
+    background-color: #ffcccb;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .approval-button:hover {
+    background-color: #ff9999;
+  }
+  

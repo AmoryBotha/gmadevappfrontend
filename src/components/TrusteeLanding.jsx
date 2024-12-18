@@ -1,43 +1,123 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/UnderConstruction.css"; // Reuse or modify the same CSS file
-import "../styles/Navbar.css"; // Importing the Navbar styles
+import "../styles/Navbar.css";
+import "../styles/ApprovalsPage.css"; // New CSS for approvals page styling
+
+const approvalsData = {
+  active: [
+    {
+      id: 1,
+      subject: "Budget Approval Q1",
+      type: "Financial",
+      createdDate: "2024-12-01",
+    },
+    {
+      id: 2,
+      subject: "Policy Update",
+      type: "Administrative",
+      createdDate: "2024-12-05",
+    },
+  ],
+  history: [
+    {
+      id: 3,
+      subject: "Project Approval",
+      type: "Operational",
+      createdDate: "2024-10-15",
+      status: "Approved",
+    },
+    {
+      id: 4,
+      subject: "Hiring Plan",
+      type: "HR",
+      createdDate: "2024-10-20",
+      status: "Declined",
+    },
+  ],
+};
 
 function TrusteeLanding1() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [view, setView] = useState("active");
+  const [approvals, setApprovals] = useState([]);
 
-    const handleBackClick = () => {
-        navigate(-1); // Navigates to the previous page
-    };
+  useEffect(() => {
+    // Load approvals based on the current view
+    switch (view) {
+      case "active":
+        setApprovals(approvalsData.active);
+        break;
+      case "history":
+        setApprovals(approvalsData.history);
+        break;
+      default:
+        setApprovals([]);
+    }
+  }, [view]);
 
-    return (
-        <div className="construction-container">
-            <div className="construction-header">
-                <h1>🚧 Trustee Landing Page 🚧</h1>
-                <p>We’re building something great for trustees!</p>
-            </div>
-            <div className="construction-content">
-                <img
-                    src="https://via.placeholder.com/400x300?text=Under+Construction"
-                    alt="Under Construction"
-                    className="construction-image"
-                />
-                <p className="construction-message">
-                    This page is under construction. Please come back soon for updates!
-                </p>
-            </div>
-            <div className="construction-footer">
-                <div className="loader"></div>
-                <p>Loading new trustee features...</p>
-            </div>
-            {/* Fun Back Button */}
-            <div className="back-button-container">
-                <button className="fun-back-button" onClick={handleBackClick}>
-                    🏠 Take Me Back!
-                </button>
-            </div>
-        </div>
-    );
+  const handleViewChange = (newView) => {
+    setView(newView);
+  };
+
+  const handleLogout = () => {
+    navigate("/login");
+  };
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
+  return (
+    <div className="approvals-container">
+      {/* Navbar */}
+      <nav className="navbar">
+        <button className="nav-button" onClick={handleBackClick}>
+          ⬅️ Back
+        </button>
+        <h1 className="navbar-title">Trustee Dashboard</h1>
+        <button className="nav-button" onClick={handleLogout}>
+          ❌ Logout
+        </button>
+      </nav>
+
+      {/* View Selector */}
+      <div className="view-selector">
+        <button
+          className={`view-button ${view === "active" ? "active" : ""}`}
+          onClick={() => handleViewChange("active")}
+        >
+          My Active Approvals
+        </button>
+        <button
+          className={`view-button ${view === "history" ? "active" : ""}`}
+          onClick={() => handleViewChange("history")}
+        >
+          My History
+        </button>
+      </div>
+
+      {/* Approvals List */}
+      <div className="approvals-list">
+        {approvals.map((approval) => (
+          <div key={approval.id} className="approval-item">
+            <h3 className="approval-subject">{approval.subject}</h3>
+            <p className="approval-type">Type: {approval.type}</p>
+            <p className="approval-date">Created: {approval.createdDate}</p>
+            {approval.status && <p className="approval-status">Status: {approval.status}</p>}
+            <button
+              className="approval-button"
+              onClick={() => navigate(`/approval/${approval.id}`)}
+            >
+              View Details
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default TrusteeLanding1;
+//Add the necessary CSS in ApprovalsPage.css for the pastel theme.
+//Integrate real API calls to fetch approvals dynamically.
+//Ensure routing for View Details to the appropriate approval detail page.
