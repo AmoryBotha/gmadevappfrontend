@@ -55,7 +55,7 @@ function TrusteeLanding1() {
 
   const handleApprovalClick = (approval) => {
     if (view !== "active") {
-      navigate("/approvals", { state: { approval } });
+      navigate("/approval", { state: { approval } });
     }
   };
 
