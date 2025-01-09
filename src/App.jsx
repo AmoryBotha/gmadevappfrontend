@@ -15,6 +15,7 @@ import User from "./pages/UserAcc"
 import PasswordResetRequest1 from "./pages/PwReset";
 import PasswordResetConfirm1 from "./pages/ConfirmPw";
 import AccDetailsViewFunc1 from "./pages/AccountDetails";
+import ApprovalDetails from "./pages/ApprovalDetails";
 
 
 function Logout() {
@@ -53,6 +54,7 @@ function App() {
         <Route path="/password-reset-confirm" element={<PasswordResetConfirm1 />} />
         <Route path="/user" element={<User />}></Route>
         <Route path="/account/:id" element={<AccDetailsViewFunc1 />}></Route>
+        <Route path="/approval" element={<ApprovalDetails />}></Route>
       </Routes>
     </BrowserRouter>
   )
