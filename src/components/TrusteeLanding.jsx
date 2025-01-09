@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
-import "../styles/ApprovalsPage.css"; // New CSS for approvals page styling
+import "../styles/ApprovalsPage.css"; // CSS for approvals page styling
 
 const approvalsData = {
   active: [
@@ -10,30 +10,20 @@ const approvalsData = {
       subject: "Budget Approval Q1",
       type: "Financial",
       createdDate: "2024-12-01",
+      building: "Building A",
     },
     {
       id: 2,
       subject: "Policy Update",
       type: "Administrative",
       createdDate: "2024-12-05",
+      building: "Building B",
     },
   ],
-  history: [
-    {
-      id: 3,
-      subject: "Project Approval",
-      type: "Operational",
-      createdDate: "2024-10-15",
-      status: "Approved",
-    },
-    {
-      id: 4,
-      subject: "Hiring Plan",
-      type: "HR",
-      createdDate: "2024-10-20",
-      status: "Declined",
-    },
-  ],
+  history: [],
+  approved: [],
+  declined: [],
+  abstained: [],
 };
 
 function TrusteeLanding1() {
@@ -43,20 +33,28 @@ function TrusteeLanding1() {
 
   useEffect(() => {
     // Load approvals based on the current view
-    switch (view) {
-      case "active":
-        setApprovals(approvalsData.active);
-        break;
-      case "history":
-        setApprovals(approvalsData.history);
-        break;
-      default:
-        setApprovals([]);
-    }
+    setApprovals(approvalsData[view]);
   }, [view]);
 
   const handleViewChange = (newView) => {
     setView(newView);
+  };
+
+  const handleAction = (approvalId, action) => {
+    // Find the approval
+    const approval = approvalsData.active.find((item) => item.id === approvalId);
+    if (!approval) return;
+
+    // Remove from active approvals
+    approvalsData.active = approvalsData.active.filter((item) => item.id !== approvalId);
+
+    // Add to appropriate history
+    approval.status = action;
+    approvalsData.history.push(approval);
+    approvalsData[action].push(approval);
+
+    // Refresh the view
+    setApprovals(approvalsData[view]);
   };
 
   const handleLogout = () => {
@@ -66,6 +64,15 @@ function TrusteeLanding1() {
   const handleBackClick = () => {
     navigate(-1);
   };
+
+  const groupedApprovals = approvals.reduce((groups, approval) => {
+    const { building } = approval;
+    if (!groups[building]) {
+      groups[building] = [];
+    }
+    groups[building].push(approval);
+    return groups;
+  }, {});
 
   return (
     <div className="approvals-container">
@@ -94,22 +101,62 @@ function TrusteeLanding1() {
         >
           My History
         </button>
+        <button
+          className={`view-button ${view === "approved" ? "active" : ""}`}
+          onClick={() => handleViewChange("approved")}
+        >
+          My Approved
+        </button>
+        <button
+          className={`view-button ${view === "declined" ? "active" : ""}`}
+          onClick={() => handleViewChange("declined")}
+        >
+          My Declined
+        </button>
+        <button
+          className={`view-button ${view === "abstained" ? "active" : ""}`}
+          onClick={() => handleViewChange("abstained")}
+        >
+          My Abstained
+        </button>
       </div>
 
       {/* Approvals List */}
       <div className="approvals-list">
-        {approvals.map((approval) => (
-          <div key={approval.id} className="approval-item">
-            <h3 className="approval-subject">{approval.subject}</h3>
-            <p className="approval-type">Type: {approval.type}</p>
-            <p className="approval-date">Created: {approval.createdDate}</p>
-            {approval.status && <p className="approval-status">Status: {approval.status}</p>}
-            <button
-              className="approval-button"
-              onClick={() => navigate(`/approval/${approval.id}`)}
-            >
-              View Details
-            </button>
+        {Object.entries(groupedApprovals).map(([building, buildingApprovals]) => (
+          <div key={building} className="building-section">
+            <h2>{building}</h2>
+            {buildingApprovals.map((approval) => (
+              <div key={approval.id} className="approval-item">
+                <h3 className="approval-subject">{approval.subject}</h3>
+                <p className="approval-type">Type: {approval.type}</p>
+                <p className="approval-date">Created: {approval.createdDate}</p>
+                {view === "active" && (
+                  <>
+                    <a href="#" className="approval-link">File Link</a>
+                    <button
+                      className="approval-button approve"
+                      onClick={() => handleAction(approval.id, "approved")}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="approval-button decline"
+                      onClick={() => handleAction(approval.id, "declined")}
+                    >
+                      Decline
+                    </button>
+                    <button
+                      className="approval-button abstain"
+                      onClick={() => handleAction(approval.id, "abstained")}
+                    >
+                      Abstain
+                    </button>
+                  </>
+                )}
+                {approval.status && <p className="approval-status">Status: {approval.status}</p>}
+              </div>
+            ))}
           </div>
         ))}
       </div>
@@ -118,6 +165,3 @@ function TrusteeLanding1() {
 }
 
 export default TrusteeLanding1;
-//Add the necessary CSS in ApprovalsPage.css for the pastel theme.
-//Integrate real API calls to fetch approvals dynamically.
-//Ensure routing for View Details to the appropriate approval detail page.
