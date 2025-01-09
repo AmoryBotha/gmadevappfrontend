@@ -34,9 +34,18 @@
     color: white;
   }
   
+  .content-wrapper {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
   .approval-top-section {
     text-align: center;
-    margin: 20px 0;
+    margin-bottom: 20px;
   }
   
   .approval-status {
@@ -46,13 +55,14 @@
   
   .approval-content {
     display: flex;
-    justify-content: space-between;
-    padding: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
   }
   
   .approval-user-section,
   .approval-other-section {
-    width: 45%;
+    flex: 1;
+    min-width: 300px;
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 5px;
