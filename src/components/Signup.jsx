@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
-//import { ACCESS_TOKEN, REFRESH_TOKEN, fnameStore,lnameStore,cellStore,idStore,usernameStore,webIdStore,conIdStore,ownerStore,trusteeStore,contractorStore } from "../constants";
-import "../styles/Form.css"
+import "../styles/Form.css";
 import LoadingIndicator from "./LoadingIndicator";
-import { ACCESS_TOKEN, REFRESH_TOKEN, fnameStore,lnameStore,cellStore,idStore,usernameStore,webIdStore,conIdStore } from "../constants";
+import { ACCESS_TOKEN, REFRESH_TOKEN, fnameStore, lnameStore, cellStore, idStore, usernameStore, webIdStore, conIdStore } from "../constants";
 
 function Form({ route, method }) {
     const [fname, setFName] = useState("");
@@ -14,69 +13,112 @@ function Form({ route, method }) {
     const [id, setID] = useState("");
     const [username, setUsername] = useState("");
     const [loading, setLoading] = useState(false);
+    const [bearerToken, setBearerToken] = useState(null);
     const navigate = useNavigate();
 
     const name = "Register";
+
+    // Fetch bearer token on page load
+    useEffect(() => {
+        const fetchToken = async () => {
+            const config = {
+                url: "https://login.microsoftonline.com/2c1efee9-7fce-4cce-b9f9-d58273ffeac3/oauth2/v2.0/token",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: new URLSearchParams({
+                    scope: "https://gmacc.crm4.dynamics.com/.default",
+                    tenant: "2c1efee9-7fce-4cce-b9f9-d58273ffeac3",
+                    client_id: "1423f8e0-c141-4207-9ab7-4a75c56c1a94",
+                    grant_type: "client_credentials",
+                    client_secret: "L1J8Q~Yq806uoQpzhzzF_WTLAJauQFxaaxxTfdBR",
+                }),
+            };
+
+            try {
+                const response = await fetch(config.url, {
+                    method: config.method,
+                    headers: config.headers,
+                    body: config.body,
+                });
+
+                const data = await response.json();
+                if (response.ok && data.access_token) {
+                    setBearerToken(data.access_token);
+                    console.log("Bearer token retrieved:", data.access_token);
+                } else {
+                    console.error("Failed to fetch bearer token:", data);
+                }
+            } catch (error) {
+                console.error("Error fetching bearer token:", error);
+            }
+        };
+
+        fetchToken();
+    }, []);
 
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
 
         try {
-            //Replace with flow that creates user profile on DV eventually replace with Sirveo Link
-          const data = await fetch("https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0", {
-            method: "POST",
-            body: JSON.stringify({
-            "fname1" : fname,
-            "lname1" : lname,
-            "email1" : username,
-            "cell1" : cell,
-            "id1" : id
+            const userPayload = {
+                fname1: fname,
+                lname1: lname,
+                email1: username,
+                cell1: cell,
+                id1: id,
+            };
 
-            }),headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-      });
-        const dataRes = await data.json();
-        //Set LocalStorage Items For User
-        localStorage.setItem('fnameStore', fname);
-        localStorage.setItem('lnameStore', lname);
-        localStorage.setItem('cellStore', cell);
-        localStorage.setItem('idStore', id);
-        localStorage.setItem('usernameStore', username);
-        localStorage.setItem('webIdStore', dataRes.UserP);
-        localStorage.setItem('conIdStore', dataRes.ContactID);
-        localStorage.setItem('ownerStore', dataRes.accOwn);
-        localStorage.setItem('trusteeStore', dataRes.accTrus);
-        localStorage.setItem('contractorStore', dataRes.accCont);
-        console.log(dataRes.accOwn,dataRes.accTrus,dataRes.accCont);
-        console.log(localStorage.getItem('trusteeStore'));
-        console.log(localStorage.getItem('webIdStore'));
+            const response = await fetch(
+                "https://prod-91.westeurope.logic.azure.com:443/workflows/4e1c017f70d748bb9a1fefbfbfad48bf/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=a9p6TXKcwsjITmZyWkkLybBeTOgg0ddf976m69dZE-0",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                        Authorization: `Bearer ${bearerToken}`, // Use the retrieved token
+                    },
+                    body: JSON.stringify(userPayload),
+                }
+            );
 
-            const res = await api.post(route, { username, password })
+            const dataRes = await response.json();
+
+            // Set LocalStorage Items For User
+            localStorage.setItem(fnameStore, fname);
+            localStorage.setItem(lnameStore, lname);
+            localStorage.setItem(cellStore, cell);
+            localStorage.setItem(idStore, id);
+            localStorage.setItem(usernameStore, username);
+            localStorage.setItem(webIdStore, dataRes.UserP);
+            localStorage.setItem(conIdStore, dataRes.ContactID);
+
+            console.log("Response Data:", dataRes);
+
+            const res = await api.post(route, { username, password });
             if (method === "login") {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-                navigate("/home")
-
+                navigate("/home");
             } else {
-                navigate("/login")
+                navigate("/login");
             }
         } catch (error) {
-            alert(error)
+            console.error("Error during submission:", error);
+            alert("An error occurred. Please try again.");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
 
     return (
-        
         <form onSubmit={handleSubmit} className="form-container">
-            <div class='welcome'>
+            <div className="welcome">
                 <h1>Welcome to the GMA Portal</h1>
                 <h1>{name}</h1>
             </div>
-            <div class='text'>
+            <div className="text">
                 <p>First Name</p>
             </div>
             <input
@@ -86,7 +128,7 @@ function Form({ route, method }) {
                 onChange={(e) => setFName(e.target.value)}
                 placeholder="First Name"
             />
-            <div class='text'>
+            <div className="text">
                 <p>Last Name</p>
             </div>
             <input
@@ -96,7 +138,7 @@ function Form({ route, method }) {
                 onChange={(e) => setLName(e.target.value)}
                 placeholder="Last Name"
             />
-            <div class='text'>
+            <div className="text">
                 <p>Mobile Number</p>
             </div>
             <input
@@ -106,7 +148,7 @@ function Form({ route, method }) {
                 onChange={(e) => setCell(e.target.value)}
                 placeholder="Mobile Number"
             />
-            <div class='text'>
+            <div className="text">
                 <p>ID Number</p>
             </div>
             <input
@@ -116,7 +158,7 @@ function Form({ route, method }) {
                 onChange={(e) => setID(e.target.value)}
                 placeholder="ID Number"
             />
-            <div class='text'>
+            <div className="text">
                 <p>Email</p>
             </div>
             <input
@@ -126,7 +168,7 @@ function Form({ route, method }) {
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Username"
             />
-            <div class='text'>
+            <div className="text">
                 <p>Password</p>
             </div>
             <input
@@ -137,12 +179,11 @@ function Form({ route, method }) {
                 placeholder="Password"
             />
             {loading && <LoadingIndicator />}
-            <button className="form-button" type="submit">
+            <button className="form-button" type="submit" disabled={!bearerToken}>
                 {name}
             </button>
         </form>
     );
-
 }
 
-export default Form
+export default Form;
