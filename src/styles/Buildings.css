@@ -1,0 +1,117 @@
+/* Buildings.css */
+
+/* General Container Styles */
+.buildings-container {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .nav-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .nav-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .navbar-title {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  /* Buildings List Styles */
+  .buildings-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .building-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .building-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .building-card h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #4CAF50;
+  }
+  
+  .building-card p {
+    margin: 5px 0;
+  }
+  
+  .trustee-folder-link {
+    display: inline-block;
+    margin: 10px 0;
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .trustee-folder-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Action Buttons */
+  .building-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .action-button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .view-payments {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .view-payments:hover {
+    background-color: #45A049;
+  }
+  
+  .view-tasks {
+    background-color: #007BFF;
+    color: white;
+  }
+  
+  .view-tasks:hover {
+    background-color: #0056b3;
+  }
+  

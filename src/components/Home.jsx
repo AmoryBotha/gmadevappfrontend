@@ -72,6 +72,12 @@ function Home1() {
           <li className="form-button">
             <Link to="/password-reset-confirm">Reset Password</Link>
           </li>
+          <li className="form-button">
+            <Link to="/buildings">Buildings Info</Link>
+          </li>
+          <li className="form-button">
+            <Link to="/ticket">Log a Ticket</Link>
+          </li>
         </ul>
       </section>
     </div>
