@@ -17,6 +17,7 @@ import PasswordResetConfirm1 from "./pages/ConfirmPw";
 import AccDetailsViewFunc1 from "./pages/AccountDetails";
 import ApprovalDetails from "./pages/ApprovalDetails";
 import BuildingsFunc from "./pages/BuildingList";
+import LogTicketFunc from "./pages/LogTicket";
 
 
 function Logout() {
@@ -57,6 +58,7 @@ function App() {
         <Route path="/account/:id" element={<AccDetailsViewFunc1 />}></Route>
         <Route path="/approval" element={<ApprovalDetails />}></Route>
         <Route path="/buildings" element={<BuildingsFunc />}></Route>
+        <Route path="/ticket" element={<LogTicketFunc />}></Route>
       </Routes>
     </BrowserRouter>
   )
