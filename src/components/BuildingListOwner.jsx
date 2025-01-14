@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import "../styles/Buildings.css";
 
-function Buildings() {
+function Buildings1() {
   const navigate = useNavigate();
 
   const buildings = [
@@ -60,4 +60,4 @@ function Buildings() {
   );
 }
 
-export default Buildings;
+export default Buildings1;

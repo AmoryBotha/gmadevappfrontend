@@ -18,7 +18,7 @@ import AccDetailsViewFunc1 from "./pages/AccountDetails";
 import ApprovalDetails from "./pages/ApprovalDetails";
 import BuildingsFunc from "./pages/BuildingList";
 import LogTicketFunc from "./pages/LogTicket";
-import BuildingsFunc from "./pages/BuildingsListOwner";
+import BuildingsFunc1 from "./pages/BuildingsListOwner";
 
 
 function Logout() {
@@ -60,7 +60,7 @@ function App() {
         <Route path="/approval" element={<ApprovalDetails />}></Route>
         <Route path="/buildings" element={<BuildingsFunc />}></Route>
         <Route path="/ticket" element={<LogTicketFunc />}></Route>
-        <Route path="/buildingsOwner" element={<BuildingsFunc />}></Route>
+        <Route path="/buildingsOwner" element={<BuildingsFunc1 />}></Route>
       </Routes>
     </BrowserRouter>
   )

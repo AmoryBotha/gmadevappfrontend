@@ -1,8 +1,8 @@
-import Buildings from "../components/BuildingListOwner"
+import Buildings1 from "../components/BuildingListOwner"
 
-function BuildingsFunc() {
+function BuildingsFunc1() {
     
-    return <Buildings route="/buildingsOwner" method="buildingsOwner" />
+    return <Buildings1 route="/buildingsOwner" method="buildingsOwner" />
 }
 
-export default BuildingsFunc
+export default BuildingsFunc1
