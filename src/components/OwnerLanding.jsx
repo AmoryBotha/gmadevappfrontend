@@ -95,6 +95,16 @@ const OwnerLanding1 = () => {
         <h2>Accounts</h2>
       </header>
 
+      {/* View Buildings Info Button */}
+      <div className="view-buildings-container">
+        <button
+          className="view-buildings-button"
+          onClick={() => navigate("/buildingsOwner")}
+        >
+          View Buildings Info
+        </button>
+      </div>
+
       <section className="accounts-section">
         <h4>Accounts Linked to Your Account</h4>
 

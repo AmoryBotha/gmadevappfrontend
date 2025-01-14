@@ -136,4 +136,24 @@ body {
     display: flex;
     gap: 10px;
   }
+
+  .view-buildings-container {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .view-buildings-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .view-buildings-button:hover {
+    background-color: #45a049;
+  }
+  
   
