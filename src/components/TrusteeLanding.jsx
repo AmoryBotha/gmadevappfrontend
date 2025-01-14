@@ -67,6 +67,10 @@ function TrusteeLanding1() {
     navigate(-1);
   };
 
+  const handleBuildingsInfoClick = () => {
+    navigate("/buildings");
+  };
+
   const groupedApprovals = approvals.reduce((groups, approval) => {
     const { building } = approval;
     if (!groups[building]) {
@@ -83,6 +87,10 @@ function TrusteeLanding1() {
         <h1 className="navbar-title">Trustee Dashboard</h1>
         <button className="nav-button" onClick={handleLogout}>❌ Logout</button>
       </nav>
+
+      <button className="buildings-button" onClick={handleBuildingsInfoClick}>
+        View Buildings Info
+      </button>
 
       <div className="view-selector">
         <button className={`view-button ${view === "active" ? "active" : ""}`} onClick={() => handleViewChange("active")}>My Active Approvals</button>
