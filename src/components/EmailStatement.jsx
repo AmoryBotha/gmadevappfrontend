@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../styles/Navbar.css"; // Importing the Navbar styles
+import "../styles/Statement.css";
 
 function EmailStmntFunc() {
   const [fromDate, setFromDate] = useState(null);
